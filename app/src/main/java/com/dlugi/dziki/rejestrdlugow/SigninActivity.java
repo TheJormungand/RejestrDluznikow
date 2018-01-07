@@ -7,11 +7,16 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -36,7 +41,11 @@ public class SigninActivity extends AsyncTask<String,Integer,String>{
         try{
             String username = arg0[0];
             String password = arg0[1];
-            String link = "http://46.242.178.181/rejestr/logging.php?login="+username+"&password="+password;
+            List<NameValuePair> params = new ArrayList<>();
+
+            String link = "http://46.242.178.181/rejestr/logging.php";
+            JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
+
             URL url = new URL(link);
             HttpClient client = new DefaultHttpClient();
             HttpGet request = new HttpGet();
