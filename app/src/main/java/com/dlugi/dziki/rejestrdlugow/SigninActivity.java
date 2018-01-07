@@ -1,26 +1,9 @@
 package com.dlugi.dziki.rejestrdlugow;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -62,24 +45,24 @@ public class SigninActivity extends AsyncTask<String,Integer,String>{
             success = json.getBoolean(TAG_PARAMS);
             if (success){
                 Log.d("tag_params","logowanie udane");
+                success = json.getBoolean(TAG_LOGGED);
+                if(success){
+                    Log.d("tag_logged","login ok");
+                }
+                else{
+                    Log.d("tag_logged","login nie ok");
+                }
+                error=json.getString(TAG_CERROR);
+                if(error.equals("OK")){
+                    Log.d("tag_cerror",error);
+                }
+                error=json.getString(TAG_QERROR);
+                if(error.equals("OK")){
+                    Log.d("tag_querror",error);
+                }
             }
             else{
                 Log.d("tag_params","logowanie nieudane");
-            }
-            success = json.getBoolean(TAG_LOGGED);
-            if(success){
-                Log.d("tag_logged","login ok");
-            }
-            else{
-                Log.d("tag_logged","login nie ok");
-            }
-            error=json.getString(TAG_CERROR);
-            if(error.equals("OK")){
-                Log.d("tag_cerror",error);
-            }
-            error=json.getString(TAG_QERROR);
-            if(error.equals("OK")){
-                Log.d("tag_querror",error);
             }
             return json.toString();
         } catch(Exception e){
