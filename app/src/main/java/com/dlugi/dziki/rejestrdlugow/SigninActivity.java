@@ -17,6 +17,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -26,6 +29,12 @@ import android.widget.TextView;
 public class SigninActivity extends AsyncTask<String,Integer,String>{
     private TextView statusField,roleField;
     private Context context;
+
+    private static final String TAG_PARAMS = "params";
+    private static final String TAG_CERROR = "connectionerror";
+    private static final String TAG_QERROR = "queryerror";
+    private static final String TAG_LOGGED = "logged";
+
 
     public SigninActivity(Context context,TextView statusField,TextView roleField) {
         this.context = context;
@@ -39,31 +48,40 @@ public class SigninActivity extends AsyncTask<String,Integer,String>{
     @Override
     protected String doInBackground(String... arg0) {
         try{
+            boolean success;
+            String error;
             String username = arg0[0];
             String password = arg0[1];
             List<NameValuePair> params = new ArrayList<>();
-
+            JSONParser jParser = new JSONParser();
             String link = "http://46.242.178.181/rejestr/logging.php";
-            JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
-
-            URL url = new URL(link);
-            HttpClient client = new DefaultHttpClient();
-            HttpGet request = new HttpGet();
-            request.setURI(new URI(link));
-            HttpResponse response = client.execute(request);
-
-            BufferedReader in = new BufferedReader(new
-                    InputStreamReader(response.getEntity().getContent()));
-
-            StringBuffer sb = new StringBuffer("");
-            String line="";
-            while ((line = in.readLine()) != null) {
-                sb.append(line);
-                break;
+            params.add(new BasicNameValuePair("login", username));
+            params.add(new BasicNameValuePair("password", password));
+            JSONObject json = jParser.makeHttpRequest(link, "GET", params);
+            Log.d("logs", json.toString());
+            success = json.getBoolean(TAG_PARAMS);
+            if (success){
+                Log.d("tag_params","logowanie udane");
             }
-
-            in.close();
-            return sb.toString();
+            else{
+                Log.d("tag_params","logowanie nieudane");
+            }
+            success = json.getBoolean(TAG_LOGGED);
+            if(success){
+                Log.d("tag_logged","login ok");
+            }
+            else{
+                Log.d("tag_logged","login nie ok");
+            }
+            error=json.getString(TAG_CERROR);
+            if(error.equals("OK")){
+                Log.d("tag_cerror",error);
+            }
+            error=json.getString(TAG_QERROR);
+            if(error.equals("OK")){
+                Log.d("tag_querror",error);
+            }
+            return json.toString();
         } catch(Exception e){
             return new String("Exception: " + e.getMessage());
         }
