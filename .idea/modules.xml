@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/RejestrDluznikow.iml" filepath="$PROJECT_DIR$/RejestrDluznikow.iml" />
       <module fileurl="file://C:\Users\Mateusz\Desktop\RejestrDluznikow-master\RejestrDluznikow.iml" filepath="C:\Users\Mateusz\Desktop\RejestrDluznikow-master\RejestrDluznikow.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RejestrDluznikow-master.iml" filepath="$PROJECT_DIR$/RejestrDluznikow-master.iml" />
+      <module fileurl="file://C:\Users\Vaio\Documents\GitHub\RejestrDluznikow\RejestrDluznikow-master.iml" filepath="C:\Users\Vaio\Documents\GitHub\RejestrDluznikow\RejestrDluznikow-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Mateusz\Desktop\RejestrDluznikow-master\app\app.iml" filepath="C:\Users\Mateusz\Desktop\RejestrDluznikow-master\app\app.iml" />
     </modules>
