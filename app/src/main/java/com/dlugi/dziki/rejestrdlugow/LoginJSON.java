@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 public class LoginJSON extends AsyncTask<String,Integer,String>{
     private Context context;
@@ -27,12 +26,10 @@ public class LoginJSON extends AsyncTask<String,Integer,String>{
     @Override
     protected String doInBackground(String... arg0) {
         try{
-            boolean success;
-            String error;
             String username = arg0[0];
             String password = arg0[1];
             List<NameValuePair> params = new ArrayList<>();
-            JSONParser jParser = new JSONParser();
+            ParserJSON jParser = new ParserJSON();
             String link = "http://46.242.178.181/rejestr/logging.php";
             params.add(new BasicNameValuePair("login", username));
             params.add(new BasicNameValuePair("password", password));

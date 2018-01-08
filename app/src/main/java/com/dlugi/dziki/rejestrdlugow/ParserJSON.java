@@ -21,14 +21,14 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public class JSONParser {
+public class ParserJSON {
 
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
 
     // constructor
-    public JSONParser() {
+    public ParserJSON() {
 
     }
 

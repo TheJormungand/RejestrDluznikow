@@ -30,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         String username = loginField.getText().toString();
         String password = passwordField.getText().toString();
         String email = emailField.getText().toString();
+        new RegisterJSON(this).execute(username,password,email);
         //new LoggingJSON(this).execute(username,password);
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
