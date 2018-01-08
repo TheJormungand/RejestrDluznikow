@@ -29,7 +29,7 @@ public class LoginJSON extends AsyncTask<String,Integer,String>{
             String username = arg0[0];
             String password = arg0[1];
             List<NameValuePair> params = new ArrayList<>();
-            ParserJSON jParser = new ParserJSON();
+            ParserJSON jParser = new ParserJSON(context);
             String link = "http://46.242.178.181/rejestr/logging.php";
             params.add(new BasicNameValuePair("login", username));
             params.add(new BasicNameValuePair("password", password));

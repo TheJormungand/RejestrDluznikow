@@ -1,15 +1,19 @@
 package com.dlugi.dziki.rejestrdlugow;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,9 +31,11 @@ public class ParserJSON {
     static JSONObject jObj = null;
     static String json = "";
 
-    // constructor
-    public ParserJSON() {
+    Context context;
 
+    // constructor
+    public ParserJSON(Context context) {
+        this.context = context;
     }
 
     // function get json from url
@@ -40,7 +46,7 @@ public class ParserJSON {
         // Making HTTP request
         try {
             // check for request method
-            if(method == "POST"){
+            if(method.equals("POST")){
                 // request method is POST
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -51,7 +57,18 @@ public class ParserJSON {
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
 
-            }else if(method == "GET"){
+                CookieStore cookieStore = httpClient.getCookieStore();
+                List<Cookie> cookies = cookieStore.getCookies();
+                if(!cookies.isEmpty()){
+                    SharedPreferences sharedPref = context.getSharedPreferences("cookies", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    for (Cookie cookie: cookies) {
+                        editor.putString(cookie.getName(), cookie.getValue());
+                        editor.apply();
+                    }
+                }
+
+            }else if(method.equals("GET")){
                 // request method is GET
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 if(params!=null) { //jeśli nie ma parametrów to musi być ten warunek bo inaczej nie chce isc dalej
@@ -63,6 +80,17 @@ public class ParserJSON {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
+
+                CookieStore cookieStore = httpClient.getCookieStore();
+                List<Cookie> cookies = cookieStore.getCookies();
+                if(!cookies.isEmpty()){
+                    SharedPreferences sharedPref = context.getSharedPreferences("cookies", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    for (Cookie cookie: cookies) {
+                        editor.putString(cookie.getName(), cookie.getValue());
+                        editor.apply();
+                    }
+                }
             }
 
         } catch (UnsupportedEncodingException e) {
