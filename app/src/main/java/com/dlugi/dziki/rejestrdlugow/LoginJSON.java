@@ -10,14 +10,12 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class LoginJSON extends AsyncTask<String,Integer,String>{
-    private TextView statusField,roleField;
     private Context context;
 
     private static final String TAG_PARAMS = "params";
-    private static final String TAG_CERROR = "connectionerror";
-    private static final String TAG_QERROR = "queryerror";
+    private static final String TAG_CERROR = "connectionError";
+    private static final String TAG_QERROR = "queryError";
     private static final String TAG_LOGGED = "logged";
-
 
     public LoginJSON(Context context) {
         this.context = context;
