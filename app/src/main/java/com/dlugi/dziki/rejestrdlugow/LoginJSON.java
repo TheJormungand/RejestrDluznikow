@@ -9,20 +9,16 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-public class SigninActivity extends AsyncTask<String,Integer,String>{
-    private TextView statusField,roleField;
+public class LoginJSON extends AsyncTask<String,Integer,String>{
     private Context context;
 
     private static final String TAG_PARAMS = "params";
-    private static final String TAG_CERROR = "connectionerror";
-    private static final String TAG_QERROR = "queryerror";
+    private static final String TAG_CERROR = "connectionError";
+    private static final String TAG_QERROR = "queryError";
     private static final String TAG_LOGGED = "logged";
 
-
-    public SigninActivity(Context context,TextView statusField,TextView roleField) {
+    public LoginJSON(Context context) {
         this.context = context;
-        this.statusField = statusField;
-        this.roleField = roleField;
     }
 
     protected void onPreExecute(){
@@ -42,23 +38,19 @@ public class SigninActivity extends AsyncTask<String,Integer,String>{
             params.add(new BasicNameValuePair("password", password));
             JSONObject json = jParser.makeHttpRequest(link, "GET", params);
             Log.d("logs", json.toString());
-            success = json.getBoolean(TAG_PARAMS);
-            if (success){
+            if (json.has(TAG_PARAMS)){
                 Log.d("tag_params","logowanie udane");
-                success = json.getBoolean(TAG_LOGGED);
-                if(success){
+                if(json.has(TAG_LOGGED)){
                     Log.d("tag_logged","login ok");
                 }
                 else{
                     Log.d("tag_logged","login nie ok");
                 }
-                error=json.getString(TAG_CERROR);
-                if(error.equals("OK")){
-                    Log.d("tag_cerror",error);
+                if(json.has(TAG_CERROR)){
+                    Log.d("tag_cerror",json.getString(TAG_CERROR));
                 }
-                error=json.getString(TAG_QERROR);
-                if(error.equals("OK")){
-                    Log.d("tag_querror",error);
+                if(json.has(TAG_QERROR)){
+                    Log.d("tag_querror",json.getString(TAG_QERROR));
                 }
             }
             else{
@@ -72,7 +64,6 @@ public class SigninActivity extends AsyncTask<String,Integer,String>{
 
     @Override
     protected void onPostExecute(String result){
-        this.statusField.setText("Login Successful");
-        this.roleField.setText(result);
+
     }
 }
