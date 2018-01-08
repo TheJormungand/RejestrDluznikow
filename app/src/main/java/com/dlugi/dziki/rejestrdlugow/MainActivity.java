@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     public void login(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
-        new Login(this).execute(username,password);
+        new LoginJSON(this).execute(username,password);
     }
 
     public void register(View view){

@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-public class Login extends AsyncTask<String,Integer,String>{
+public class LoginJSON extends AsyncTask<String,Integer,String>{
     private TextView statusField,roleField;
     private Context context;
 
@@ -19,7 +19,7 @@ public class Login extends AsyncTask<String,Integer,String>{
     private static final String TAG_LOGGED = "logged";
 
 
-    public Login(Context context) {
+    public LoginJSON(Context context) {
         this.context = context;
     }
 
