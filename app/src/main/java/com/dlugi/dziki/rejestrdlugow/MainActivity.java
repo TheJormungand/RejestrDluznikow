@@ -17,27 +17,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        usernameField = findViewById(R.id.editText1);
-        passwordField = findViewById(R.id.editText2);
 
         SharedPreferences sharedPref = getSharedPreferences("cookies",Context.MODE_PRIVATE);
         String cookie = sharedPref.getString("id", "Brak cookie");
         Log.d("Stan cookie", cookie);
-    }
-
-    public void login(View view){
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
-        new LoginJSON(this).execute(username,password);
-        SharedPreferences sharedPref = getSharedPreferences("cookies",Context.MODE_PRIVATE);
-        String cookie = sharedPref.getString("id", "Brak cookie");
-        Log.d("Stan cookie", cookie);
-        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        //TODO check cookie
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
 
-    public void register(View view){
-        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-        startActivity(intent);
-    }
 }
