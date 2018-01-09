@@ -14,6 +14,11 @@
     <string name="method">Login Method</string>
     <string name="Choose">Choose Method</string>
     <string name="FgPass">I don\'t remember password</string>
+    <string name="DebtMenu">Debt</string>
+    <string name="GroupMenu">Group</string>
+    <string name="UserMenu">User</string>
+    <string name="NewGroup">Add Group</string>
+    <string name="JoinGroup">Join Group</string>
 
 
 </resources>
