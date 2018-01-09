@@ -107,4 +107,5 @@
         android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/TextHaslo"
         app:layout_constraintTop_toBottomOf="@+id/Login" />
+
 </android.support.constraint.ConstraintLayout>

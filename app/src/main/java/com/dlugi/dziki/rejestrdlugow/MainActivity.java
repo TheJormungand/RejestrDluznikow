@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
         SharedPreferences sharedPref = getSharedPreferences("cookies",Context.MODE_PRIVATE);
         String cookie = sharedPref.getString("id", "Brak cookie");
         Log.d("Stan cookie", cookie);
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
     }
 
     public void register(View view){

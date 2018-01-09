@@ -19,10 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".GroupActivity" />
-        <activity android:name=".DebtActivity" />
-        <activity android:name=".UserActivity"></activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_register_tabbed"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".register_activity"
+            android:label="@string/title_activity_register_activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_registeringactivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

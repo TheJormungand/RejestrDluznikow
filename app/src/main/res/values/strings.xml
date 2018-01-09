@@ -19,6 +19,12 @@
     <string name="UserMenu">User</string>
     <string name="NewGroup">Add Group</string>
     <string name="JoinGroup">Join Group</string>
+    <string name="title_activity_register_tabbed">RegisterActivityTabbed</string>
+    <string name="tab_text_1">Debt</string>
+    <string name="tab_text_2">Group</string>
+    <string name="tab_text_3">User</string>
+    <string name="title_activity_register_activity">register_activity</string>
+    <string name="title_activity_registeringactivity">registeringactivity</string>
 
 
 </resources>
