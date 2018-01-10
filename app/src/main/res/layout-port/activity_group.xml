@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
     tools:context="com.dlugi.dziki.rejestrdlugow.MenuActivity$GroupActivityFragment">
 
     <Button
@@ -13,7 +13,6 @@
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="30dp"
-        android:onClick="addGroup"
         android:text="@string/NewGroup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/joingroup"
@@ -26,7 +25,6 @@
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="20dp"
-        android:onClick="joinGroup"
         android:text="@string/JoinGroup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,28 +1,38 @@
 package com.dlugi.dziki.rejestrdlugow;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +76,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    public static class GroupActivityFragment extends Fragment {
-
+    public static class GroupActivityFragment extends Fragment implements View.OnClickListener{
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public GroupActivityFragment() {
@@ -86,25 +95,47 @@ public class MenuActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.activity_group, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            //Obsługa guzików w activity group
+            Button addGroupButton = rootView.findViewById(R.id.addgroup);
+            addGroupButton.setOnClickListener(this);
+            Button joinGroupButton = rootView.findViewById(R.id.joingroup);
+            joinGroupButton.setOnClickListener(this);
+
             return rootView;
         }
-        public void addGroup(View view){
 
+        //implementacja obsługi guzików z activity group
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.addgroup:{
+                    Toast.makeText(getActivity(),"Test",Toast.LENGTH_SHORT).show();
+                }
+                break;
+                case R.id.joingroup:{
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    final EditText edittext = new EditText(getActivity());
+                    alert.setMessage("Enter Your Message");
+                    alert.setTitle("Enter Your Title");
+                    alert.setView(edittext);
+                    alert.setPositiveButton("Yes Option", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            String YouEditTextValue = edittext.getText().toString();
+                        }
+                    });
+
+                    alert.setNegativeButton("No Option", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // what ever you want to do with No option.
+                        }
+                    });
+                    alert.show();
+                }
+                break;
+            }
         }
 
-        public void joinGroup(View view){
-
-        }
-
-        public void menuDebt(View view){
-
-        }
-
-        public void menuUser(View view){
-
-        }
     }
 
     public static class DebtActivityFragment extends Fragment {

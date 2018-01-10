@@ -11,8 +11,6 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
-    private EditText usernameField,passwordField;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,9 +19,9 @@ public class MainActivity extends Activity {
         SharedPreferences sharedPref = getSharedPreferences("cookies",Context.MODE_PRIVATE);
         String cookie = sharedPref.getString("id", "Brak cookie");
         Log.d("Stan cookie", cookie);
+
         //TODO check cookie
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
-
 }
