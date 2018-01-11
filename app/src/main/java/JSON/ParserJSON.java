@@ -1,4 +1,4 @@
-package com.dlugi.dziki.rejestrdlugow;
+package JSON;
 
 import android.content.Context;
 import android.content.SharedPreferences;
