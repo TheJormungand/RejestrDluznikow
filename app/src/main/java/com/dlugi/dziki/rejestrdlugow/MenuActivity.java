@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MenuActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -97,27 +99,38 @@ public class MenuActivity extends AppCompatActivity {
         //implementacja obsługi guzików z activity group
         @Override
         public void onClick(View v) {
+            EditText GroupnameLabel = null;
+            Button cancelbutton = null;
+            Button okbutton = null;
             switch (v.getId()) {
                 case R.id.addgroup:{
                     Toast.makeText(getActivity(),"Test",Toast.LENGTH_SHORT).show();
                 }
                 break;
                 case R.id.joingroup:{
-                    final EditText Groupname;
-                    LayoutInflater inflater = getLayoutInflater();
-                    View dialoglayout = inflater.inflate(R.layout.joingroup_dialog, null);
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    alert.setView(dialoglayout);
-                    Groupname = dialoglayout.findViewById(R.id.EnterGroupName) ;
-                    Button cancelbutton = dialoglayout.findViewById(R.id.addgroup);
-                    cancelbutton.setOnClickListener(this);
-                    Button okbutton = dialoglayout.findViewById(R.id.joingroup);
-                    okbutton.setOnClickListener(this);
 
+                    LayoutInflater inflater = getLayoutInflater();
+                    View joinGroupDialog = inflater.inflate(R.layout.joingroup_dialog, null);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setView(joinGroupDialog);
+                    GroupnameLabel = joinGroupDialog.findViewById(R.id.EnterGroupName) ;
+                    cancelbutton = joinGroupDialog.findViewById(R.id.cancelbutton);
+                    cancelbutton.setOnClickListener(this);
+                    okbutton = joinGroupDialog.findViewById(R.id.okbutton);
+                    okbutton.setOnClickListener(this);
                     alert.show();
 
-                }
-                break;
+                }break;
+                case R.id.cancelbutton:{
+                    Toast.makeText(getActivity(),"cancel",Toast.LENGTH_SHORT).show();
+
+                }break;
+                case R.id.okbutton:{
+                    okbutton.setText("Search");
+                    String GroupName = GroupnameLabel.getText().toString();
+                    ArrayList<ArrayList<String>> groups=null;
+                    new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName);
+                }break;
             }
         }
 
