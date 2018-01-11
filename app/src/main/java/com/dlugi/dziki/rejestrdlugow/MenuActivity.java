@@ -1,7 +1,6 @@
 package com.dlugi.dziki.rejestrdlugow;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.dlugi.dziki.rejestrdlugow.JSON.JoinGroupDialogJSON;
 
 import java.util.ArrayList;
 
@@ -130,6 +131,7 @@ public class MenuActivity extends AppCompatActivity {
                     String GroupName = GroupnameLabel.getText().toString();
                     ArrayList<ArrayList<String>> groups=null;
                     new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName);
+                    
                 }break;
             }
         }

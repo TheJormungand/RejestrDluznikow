@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import JSON.LoginJSON;
+import com.dlugi.dziki.rejestrdlugow.JSON.LoginJSON;
 
 public class LoginActivity extends AppCompatActivity {
 

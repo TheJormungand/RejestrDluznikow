@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import JSON.LoginCheckJSON;
+import com.dlugi.dziki.rejestrdlugow.JSON.LoginCheckJSON;
 
 public class MainActivity extends Activity {
 

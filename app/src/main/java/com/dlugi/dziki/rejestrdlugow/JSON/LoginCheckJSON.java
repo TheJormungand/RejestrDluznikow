@@ -1,4 +1,4 @@
-package JSON;
+package com.dlugi.dziki.rejestrdlugow.JSON;
 
 import com.dlugi.dziki.rejestrdlugow.MenuActivity;
 import com.dlugi.dziki.rejestrdlugow.LoginActivity;
