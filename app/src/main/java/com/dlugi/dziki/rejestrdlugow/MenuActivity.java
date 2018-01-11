@@ -1,32 +1,22 @@
 package com.dlugi.dziki.rejestrdlugow;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
@@ -113,24 +103,19 @@ public class MenuActivity extends AppCompatActivity {
                 }
                 break;
                 case R.id.joingroup:{
+                    final EditText Groupname;
+                    LayoutInflater inflater = getLayoutInflater();
+                    View dialoglayout = inflater.inflate(R.layout.joingroup_dialog, null);
                     AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    final EditText edittext = new EditText(getActivity());
-                    alert.setMessage("Enter Your Message");
-                    alert.setTitle("Enter Your Title");
-                    alert.setView(edittext);
-                    alert.setPositiveButton("Yes Option", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
+                    alert.setView(dialoglayout);
+                    Groupname = dialoglayout.findViewById(R.id.EnterGroupName) ;
+                    Button cancelbutton = dialoglayout.findViewById(R.id.addgroup);
+                    cancelbutton.setOnClickListener(this);
+                    Button okbutton = dialoglayout.findViewById(R.id.joingroup);
+                    okbutton.setOnClickListener(this);
 
-                            String YouEditTextValue = edittext.getText().toString();
-                        }
-                    });
-
-                    alert.setNegativeButton("No Option", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            // what ever you want to do with No option.
-                        }
-                    });
                     alert.show();
+
                 }
                 break;
             }
