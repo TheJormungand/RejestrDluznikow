@@ -1,15 +1,21 @@
-package com.dlugi.dziki.rejestrdlugow;
+package JSON;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.dlugi.dziki.rejestrdlugow.MenuActivity;
+
 public class LoginJSON extends AsyncTask<String,Integer,String>{
     private Context context;
+    private boolean loginOK = false;
 
     private static final String TAG_PARAMS = "params";
     private static final String TAG_CERROR = "connectionError";
@@ -39,6 +45,7 @@ public class LoginJSON extends AsyncTask<String,Integer,String>{
                 Log.d("tag_params","logowanie udane");
                 if(json.has(TAG_LOGGED)){
                     Log.d("tag_logged","login ok");
+                    loginOK = true;
                 }
                 else{
                     Log.d("tag_logged","login nie ok");
@@ -60,7 +67,15 @@ public class LoginJSON extends AsyncTask<String,Integer,String>{
     }
 
     @Override
-    protected void onPostExecute(String result){
-
+    protected void onPostExecute(String result) {
+        if (loginOK) {
+            Intent intent = new Intent(context, MenuActivity.class);
+            context.startActivity(intent);
         }
+        else{
+            //TODO: Informacja o błędnych danych logowania
+            SharedPreferences sharedPref = context.getSharedPreferences("cookies", Context.MODE_PRIVATE);
+            sharedPref.edit().clear().apply();
+        }
+    }
 }

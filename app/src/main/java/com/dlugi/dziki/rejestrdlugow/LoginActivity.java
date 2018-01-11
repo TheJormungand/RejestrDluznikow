@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import JSON.LoginJSON;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameField,passwordField;
@@ -23,10 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         new LoginJSON(this).execute(username,password);
-
-        //TODO login success check
-        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        startActivity(intent);
     }
 
     public void register(View view){

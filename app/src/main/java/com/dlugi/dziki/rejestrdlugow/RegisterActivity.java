@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import JSON.RegisterJSON;
+
 public class RegisterActivity extends AppCompatActivity {
 
 
@@ -22,7 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
         emailField = findViewById(R.id.Email);
         confirmField = findViewById(R.id.Confirm);
 
-        //registerButton = findViewById(R.id.Zarejestruj);
 
     }
 

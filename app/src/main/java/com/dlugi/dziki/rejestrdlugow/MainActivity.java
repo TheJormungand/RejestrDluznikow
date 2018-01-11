@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
+
+import JSON.LoginCheckJSON;
 
 public class MainActivity extends Activity {
 
@@ -17,11 +17,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPref = getSharedPreferences("cookies",Context.MODE_PRIVATE);
-        String cookie = sharedPref.getString("id", "Brak cookie");
-        Log.d("Stan cookie", cookie);
-
-        //TODO check cookie
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
+        String idFromCookie = sharedPref.getString("id", "Brak cookie");
+        if(idFromCookie.equals("Brak cookie")){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }
+        else{
+            new LoginCheckJSON(this).execute(idFromCookie);
+        }
+        Log.d("Stan cookie", idFromCookie);
     }
 }
