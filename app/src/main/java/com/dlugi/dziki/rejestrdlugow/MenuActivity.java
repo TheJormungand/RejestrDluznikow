@@ -1,6 +1,8 @@
 package com.dlugi.dziki.rejestrdlugow;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,14 +19,20 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dlugi.dziki.rejestrdlugow.JSON.InsertIntoGroupJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.JoinGroupDialogJSON;
 
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
-
+    SharedPreferences sharedPref;
+    private static String idFromCookie;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     @Override
@@ -42,6 +51,8 @@ public class MenuActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        sharedPref = getSharedPreferences("cookies", Context.MODE_PRIVATE);
+        idFromCookie = sharedPref.getString("id", "Brak cookie");
 
     }
 
@@ -100,39 +111,67 @@ public class MenuActivity extends AppCompatActivity {
         //implementacja obsługi guzików z activity group
         @Override
         public void onClick(View v) {
-            EditText GroupnameLabel = null;
-            Button cancelbutton = null;
-            Button okbutton = null;
+            EditText GroupnameLabel=null;
+
+            RadioGroup grouplist = null;
+            RadioGroup.LayoutParams rprms;
+            LayoutInflater inflater = getLayoutInflater();
+            View joinGroupDialog=inflater.inflate(R.layout.joingroup_dialog, null);
+            Button okbutton = joinGroupDialog.findViewById(R.id.okbutton);
+            okbutton.setEnabled(false);
+            Button cancelbutton = joinGroupDialog.findViewById(R.id.cancelbutton);
+            ImageButton searchbutton = joinGroupDialog.findViewById(R.id.searchbutton);
+            ArrayList<ArrayList<String>> groups=null;
             switch (v.getId()) {
                 case R.id.addgroup:{
                     Toast.makeText(getActivity(),"Test",Toast.LENGTH_SHORT).show();
                 }
                 break;
                 case R.id.joingroup:{
-
-                    LayoutInflater inflater = getLayoutInflater();
-                    View joinGroupDialog = inflater.inflate(R.layout.joingroup_dialog, null);
                     AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                     alert.setView(joinGroupDialog);
-                    GroupnameLabel = joinGroupDialog.findViewById(R.id.EnterGroupName) ;
-                    cancelbutton = joinGroupDialog.findViewById(R.id.cancelbutton);
                     cancelbutton.setOnClickListener(this);
-                    okbutton = joinGroupDialog.findViewById(R.id.okbutton);
                     okbutton.setOnClickListener(this);
+                    searchbutton.setOnClickListener(this);
+                    grouplist = joinGroupDialog.findViewById(R.id.GroupList);
                     alert.show();
 
                 }break;
                 case R.id.cancelbutton:{
                     Toast.makeText(getActivity(),"cancel",Toast.LENGTH_SHORT).show();
+                    //TODO make cancel great again!
 
                 }break;
                 case R.id.okbutton:{
-                    okbutton.setText("Search");
-                    String GroupName = GroupnameLabel.getText().toString();
-                    ArrayList<ArrayList<String>> groups=null;
-                    new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName);
-                    
+                        Integer index = grouplist.getCheckedRadioButtonId();
+                        if (index != null) {
+                            new InsertIntoGroupJSON(getActivity()).execute(idFromCookie, groups.get(index).get(0));
+                        } else {
+                            Toast.makeText(getActivity(), "Select a group first", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.d("userid", idFromCookie);//TODO temporary, delete when search working
+
                 }break;
+                case R.id.searchbutton:{
+
+                    GroupnameLabel = joinGroupDialog.findViewById(R.id.EnterGroupName);
+                    String GroupName = GroupnameLabel.getText().toString();
+                    //new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName,idFromCookie);
+                    if(groups==null || groups.isEmpty()){
+                        Toast.makeText(getActivity(),"No Groups Found",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        for(ArrayList group: groups) {
+                            RadioButton radioButton = new RadioButton(getActivity());
+                            radioButton.setText(group.get(1).toString());
+                            rprms = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                            grouplist.addView(radioButton, rprms);
+
+                        }
+                        grouplist.check(0);
+                        okbutton.setEnabled(true);
+                    }
+                }
             }
         }
 

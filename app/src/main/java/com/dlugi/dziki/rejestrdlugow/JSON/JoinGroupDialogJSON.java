@@ -23,9 +23,9 @@ public class JoinGroupDialogJSON extends AsyncTask<String,Integer,String> {
     private static final String TAG_CERROR = "connectionError";
     private static final String TAG_QERROR = "queryError";
     private static final String TAG_GROUPS = "groups";
-    private static final String TAG_GROUPNAME = "groupname";
-    private static final String TAG_IDGROUP = "idgroup";
-    private static final String TAG_GROUPADMIN = "groupadmin";
+    private static final String TAG_GROUPNAME = "nazwa";
+    private static final String TAG_IDGROUP = "id";
+    private static final String TAG_GROUPADMIN = "admin";
 
     public JoinGroupDialogJSON(Context context, ArrayList<ArrayList<String>> groupNamesArray) {
         this.context = context;
@@ -39,12 +39,15 @@ public class JoinGroupDialogJSON extends AsyncTask<String,Integer,String> {
     protected String doInBackground(String... arg0) {
         try{
             String groupname = arg0[0];
+            String iduser = arg0[1];
+
             List<NameValuePair> params = new ArrayList<>();
             ParserJSON jParser = new ParserJSON(context);
-            String link = "http://46.242.178.181/rejestr/logging.php";//TODO change to new php file
-            params.add(new BasicNameValuePair("groupname", groupname));
+            String link = "http://46.242.178.181/rejestr/searchGroups.php";//TODO change to new php file
+            params.add(new BasicNameValuePair("name", groupname));
+            params.add(new BasicNameValuePair("id", groupname));
+
             JSONObject json = jParser.makeHttpRequest(link, "GET", params);
-            Log.d("logs", json.toString());
             groups = json.getJSONArray(TAG_GROUPS);
             ArrayList groupparams = new ArrayList<String>();
             for (int i = 0; i < groups.length(); i++) {
