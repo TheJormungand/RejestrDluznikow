@@ -30,6 +30,8 @@ import com.dlugi.dziki.rejestrdlugow.JSON.JoinGroupDialogJSON;
 
 import java.util.ArrayList;
 
+import static java.lang.Thread.sleep;
+
 public class MenuActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     private static String idFromCookie;
@@ -82,6 +84,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public static class GroupActivityFragment extends Fragment implements View.OnClickListener{
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private AlertDialog alert=null;
 
         public GroupActivityFragment() {
         }
@@ -104,7 +107,7 @@ public class MenuActivity extends AppCompatActivity {
             addGroupButton.setOnClickListener(this);
             Button joinGroupButton = rootView.findViewById(R.id.joingroup);
             joinGroupButton.setOnClickListener(this);
-
+            
             return rootView;
         }
 
@@ -112,40 +115,38 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             EditText GroupnameLabel=null;
-
             RadioGroup grouplist = null;
             RadioGroup.LayoutParams rprms;
             LayoutInflater inflater = getLayoutInflater();
             View joinGroupDialog=inflater.inflate(R.layout.joingroup_dialog, null);
             Button okbutton = joinGroupDialog.findViewById(R.id.okbutton);
-            okbutton.setEnabled(false);
             Button cancelbutton = joinGroupDialog.findViewById(R.id.cancelbutton);
             ImageButton searchbutton = joinGroupDialog.findViewById(R.id.searchbutton);
             ArrayList<ArrayList<String>> groups=null;
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
             switch (v.getId()) {
                 case R.id.addgroup:{
-                    Toast.makeText(getActivity(),"Test",Toast.LENGTH_SHORT).show();
+
                 }
                 break;
                 case R.id.joingroup:{
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    alert.setView(joinGroupDialog);
+                    okbutton.setEnabled(false);
+                    alertBuilder.setView(joinGroupDialog);
                     cancelbutton.setOnClickListener(this);
                     okbutton.setOnClickListener(this);
                     searchbutton.setOnClickListener(this);
                     grouplist = joinGroupDialog.findViewById(R.id.GroupList);
-                    alert.show();
-
+                    alert = alertBuilder.show();
                 }break;
                 case R.id.cancelbutton:{
-                    Toast.makeText(getActivity(),"cancel",Toast.LENGTH_SHORT).show();
-                    //TODO make cancel great again!
-
+                    alert.dismiss();
                 }break;
                 case R.id.okbutton:{
                         Integer index = grouplist.getCheckedRadioButtonId();
                         if (index != null) {
                             new InsertIntoGroupJSON(getActivity()).execute(idFromCookie, groups.get(index).get(0));
+                            alert.dismiss();
+                            Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "Select a group first", Toast.LENGTH_SHORT).show();
                         }
@@ -153,7 +154,6 @@ public class MenuActivity extends AppCompatActivity {
 
                 }break;
                 case R.id.searchbutton:{
-
                     GroupnameLabel = joinGroupDialog.findViewById(R.id.EnterGroupName);
                     String GroupName = GroupnameLabel.getText().toString();
                     //new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName,idFromCookie);
@@ -166,12 +166,11 @@ public class MenuActivity extends AppCompatActivity {
                             radioButton.setText(group.get(1).toString());
                             rprms = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
                             grouplist.addView(radioButton, rprms);
-
                         }
                         grouplist.check(0);
                         okbutton.setEnabled(true);
                     }
-                }
+                }break;
             }
         }
 
