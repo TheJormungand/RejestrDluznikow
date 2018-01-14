@@ -17,17 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dlugi.dziki.rejestrdlugow.JSON.GetGroupsJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.InsertIntoGroupJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.JoinGroupDialogJSON;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -85,7 +89,10 @@ public class MenuActivity extends AppCompatActivity {
     public static class GroupActivityFragment extends Fragment implements View.OnClickListener{
         private static final String ARG_SECTION_NUMBER = "section_number";
         private AlertDialog alert=null;
-
+        private ArrayList<ArrayList<String>> UserGroupList;
+        private ArrayList<String> UserGroupListCount;
+        private ListView groupListView ;
+        private ArrayAdapter<String> adapter;
         public GroupActivityFragment() {
         }
 
@@ -99,15 +106,36 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.activity_group, container, false);
             //Obsługa guzików w activity group
             Button addGroupButton = rootView.findViewById(R.id.addgroup);
             addGroupButton.setOnClickListener(this);
             Button joinGroupButton = rootView.findViewById(R.id.joingroup);
             joinGroupButton.setOnClickListener(this);
-            
+
+            //ListView w Groups tab
+            groupListView=rootView.findViewById(R.id.GroupView);
+            new GetGroupsJSON(getActivity(),UserGroupList,UserGroupListCount).execute(idFromCookie);
+            if(UserGroupList!=null) {
+                adapter = new GroupListAdapter(getActivity(), UserGroupList, UserGroupListCount);
+                groupListView.setAdapter(adapter);
+            }else{
+                //TODO whole "else" for testing etc. in final build replace with "No groups" info
+                String testString = "testgroup";
+                ArrayList<String> testListCount = new ArrayList<String>();
+                ArrayList<ArrayList<String>> testArray = new ArrayList<>();
+                for(int i=0;i<10;i++) {
+                    ArrayList<String> testList = new ArrayList<String>();
+                    testListCount.add(testString);
+                    testList.add(testString);
+                    testList.add(testString);
+                    testList.add(testString);
+                    testArray.add(testList);
+                }
+                adapter = new GroupListAdapter(getActivity(), testArray, testListCount);
+                groupListView.setAdapter(adapter);
+            }//TODO end of test "else", delete in final buld!
             return rootView;
         }
 
