@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.dlugi.dziki.rejestrdlugow.MainActivity;
+import com.dlugi.dziki.rejestrdlugow.Activities.MainActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

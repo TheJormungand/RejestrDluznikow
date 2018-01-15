@@ -1,7 +1,7 @@
 package com.dlugi.dziki.rejestrdlugow.JSON;
 
-import com.dlugi.dziki.rejestrdlugow.MenuActivity;
-import com.dlugi.dziki.rejestrdlugow.LoginActivity;
+import com.dlugi.dziki.rejestrdlugow.Activities.MenuActivity;
+import com.dlugi.dziki.rejestrdlugow.Activities.LoginActivity;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;

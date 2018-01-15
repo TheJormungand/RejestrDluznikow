@@ -47,7 +47,7 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
             params.add(new BasicNameValuePair("id", iduser));
             JSONObject json = jParser.makeHttpRequest(link, "GET", params);
             groups = json.getJSONArray(TAG_GROUPS);
-            ArrayList groupparams = new ArrayList<String>();
+            ArrayList<String> groupparams = new ArrayList<>();
             for (int i = 0; i < groups.length(); i++) {
                 JSONObject c = groups.getJSONObject(i);
                 String name = c.getString(TAG_GROUPNAME);
@@ -59,7 +59,6 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
                 groupNameArray.add(groupparams);
                 groupCount.add("LubiePlacki");
             }
-            //TODO czy user jest adminem grupy? gdzie to sprawdzać?
             if (json.has(TAG_PARAMS)){
                 Log.d("tag_params","logowanie udane");
                 if(json.has(TAG_CERROR)){

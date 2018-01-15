@@ -1,4 +1,4 @@
-package com.dlugi.dziki.rejestrdlugow;
+package com.dlugi.dziki.rejestrdlugow.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.dlugi.dziki.rejestrdlugow.JSON.RegisterDataCheckJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.RegisterJSON;
+import com.dlugi.dziki.rejestrdlugow.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

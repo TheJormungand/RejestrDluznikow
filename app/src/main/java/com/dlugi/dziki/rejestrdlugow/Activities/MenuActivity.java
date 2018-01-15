@@ -1,4 +1,4 @@
-package com.dlugi.dziki.rejestrdlugow;
+package com.dlugi.dziki.rejestrdlugow.Activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -26,8 +26,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.dlugi.dziki.rejestrdlugow.GroupListAdapter;
 import com.dlugi.dziki.rejestrdlugow.JSON.GetGroupsJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.InsertIntoGroupJSON;
+import com.dlugi.dziki.rejestrdlugow.R;
 
 import java.util.ArrayList;
 
@@ -118,6 +120,7 @@ public class MenuActivity extends AppCompatActivity {
             }else{
                 //TODO whole "else" for testing etc. in final build replace with "No groups" info
                 String testString = "testgroup";
+                String admintest = "0";
                 ArrayList<String> testListCount = new ArrayList<String>();
                 ArrayList<ArrayList<String>> testArray = new ArrayList<>();
                 for(int i=0;i<10;i++) {
@@ -173,7 +176,7 @@ public class MenuActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getActivity(), "Select a group first", Toast.LENGTH_SHORT).show();
                         }
-                        Log.d("userid", idFromCookie);//TODO temporary, delete when search working
+
 
                 }break;
                 case R.id.searchbutton:{

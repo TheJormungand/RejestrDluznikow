@@ -1,4 +1,4 @@
-package com.dlugi.dziki.rejestrdlugow;
+package com.dlugi.dziki.rejestrdlugow.Activities;
 
 
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.dlugi.dziki.rejestrdlugow.JSON.LoginJSON;
+import com.dlugi.dziki.rejestrdlugow.R;
 
 public class LoginActivity extends AppCompatActivity {
 

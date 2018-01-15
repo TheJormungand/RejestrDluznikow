@@ -1,4 +1,4 @@
-package com.dlugi.dziki.rejestrdlugow;
+package com.dlugi.dziki.rejestrdlugow.Activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.dlugi.dziki.rejestrdlugow.JSON.LoginCheckJSON;
+import com.dlugi.dziki.rejestrdlugow.R;
 
 public class MainActivity extends Activity {
 

@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.dlugi.dziki.rejestrdlugow.MenuActivity;
+import com.dlugi.dziki.rejestrdlugow.Activities.MenuActivity;
 
 public class LoginJSON extends AsyncTask<String,Integer,String>{
     private Context context;

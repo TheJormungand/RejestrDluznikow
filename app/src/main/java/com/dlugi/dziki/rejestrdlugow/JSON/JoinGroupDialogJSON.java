@@ -49,7 +49,7 @@ public class JoinGroupDialogJSON extends AsyncTask<String,Integer,String> {
 
             JSONObject json = jParser.makeHttpRequest(link, "GET", params);
             groups = json.getJSONArray(TAG_GROUPS);
-            ArrayList groupparams = new ArrayList<String>();
+            ArrayList<String> groupparams = new ArrayList<>();
             for (int i = 0; i < groups.length(); i++) {
                 JSONObject c = groups.getJSONObject(i);
                 String name = c.getString(TAG_GROUPNAME);
