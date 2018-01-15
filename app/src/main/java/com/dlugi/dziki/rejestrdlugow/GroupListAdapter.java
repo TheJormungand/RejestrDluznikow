@@ -1,12 +1,14 @@
 package com.dlugi.dziki.rejestrdlugow;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,12 +25,11 @@ public class GroupListAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View rowView =  layoutInflater.inflate(R.layout.grouplist_element, null, true);
-
         Button groupNameButton =  rowView.findViewById(R.id.groupButton);
         ImageButton groupSettings =  rowView.findViewById(R.id.groupSettings);
 
         groupNameButton.setText(groupList.get(position).get(1));
-        if(groupList.get(position).get(2).equals("true")){
+        if(groupList.get(position).get(2).equals("1")){
             groupSettings.setImageResource(R.drawable.admin_settings_icon);
         }else{
             groupSettings.setImageResource(R.drawable.user_settings_icon);

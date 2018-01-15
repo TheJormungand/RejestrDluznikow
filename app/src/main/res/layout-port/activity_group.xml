@@ -10,35 +10,33 @@
         android:id="@+id/addgroup"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
         android:text="@string/NewGroup"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/joingroup"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GroupView" />
 
     <Button
         android:id="@+id/joingroup"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
         android:text="@string/JoinGroup"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addgroup" />
+        app:layout_constraintStart_toEndOf="@+id/addgroup"
+        app:layout_constraintTop_toBottomOf="@+id/GroupView" />
 
     <ListView
         android:id="@+id/GroupView"
         android:layout_width="344dp"
-        android:layout_height="372dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="420dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/addgroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

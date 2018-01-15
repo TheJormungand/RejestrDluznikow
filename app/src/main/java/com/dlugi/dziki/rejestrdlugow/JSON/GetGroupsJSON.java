@@ -1,9 +1,17 @@
 package com.dlugi.dziki.rejestrdlugow.JSON;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.dlugi.dziki.rejestrdlugow.GroupListAdapter;
+import com.dlugi.dziki.rejestrdlugow.R;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -14,11 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
-    private Context context;
-
-    JSONArray groups = null;
-    private ArrayList<ArrayList<String>> groupNameArray;
-    private ArrayList<String> groupCount;
+    private Activity context;
+    private View rootView;
+    private ListView groupListView ;
+    private ArrayList<ArrayList<String>> UserGroupList = new ArrayList<>();
+    private ArrayList<String> UserGroupListCount= new ArrayList<>();
+    private ArrayAdapter<String> adapter;
+    private JSONArray groups = null;
     private static final String TAG_PARAMS = "params";
     private static final String TAG_CERROR = "connectionError";
     private static final String TAG_QERROR = "queryError";
@@ -27,10 +37,9 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
     private static final String TAG_IDGROUP = "id";
     private static final String TAG_GROUPADMIN = "admin";
 
-    public GetGroupsJSON(Context context, ArrayList<ArrayList<String>> groupNamesArray,ArrayList<String> groupCount) {
+    public GetGroupsJSON(Activity context, View rootView) {
         this.context = context;
-        this.groupNameArray = groupNamesArray;
-        this.groupCount=groupCount;
+        this.rootView=rootView;
     }
 
     protected void onPreExecute(){
@@ -39,16 +48,17 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
     @Override
     protected String doInBackground(String... arg0) {
         try{
-            String iduser = arg0[1];
-
+            String iduser = arg0[0];
+            Log.d("IDUSER",iduser);
             List<NameValuePair> params = new ArrayList<>();
             ParserJSON jParser = new ParserJSON(context);
             String link = "http://46.242.178.181/rejestr/getGroups.php";//TODO change to new php file
             params.add(new BasicNameValuePair("id", iduser));
             JSONObject json = jParser.makeHttpRequest(link, "GET", params);
             groups = json.getJSONArray(TAG_GROUPS);
-            ArrayList<String> groupparams = new ArrayList<>();
+
             for (int i = 0; i < groups.length(); i++) {
+                ArrayList<String> groupparams = new ArrayList<>();
                 JSONObject c = groups.getJSONObject(i);
                 String name = c.getString(TAG_GROUPNAME);
                 String id = c.getString(TAG_IDGROUP);
@@ -56,9 +66,10 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
                 groupparams.add(id);
                 groupparams.add(name);
                 groupparams.add(groupadmin);
-                groupNameArray.add(groupparams);
-                groupCount.add("LubiePlacki");
+                UserGroupList.add(groupparams);
+                UserGroupListCount.add("LubiePlacki");
             }
+
             if (json.has(TAG_PARAMS)){
                 Log.d("tag_params","logowanie udane");
                 if(json.has(TAG_CERROR)){
@@ -79,6 +90,12 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
 
     @Override
     protected void onPostExecute(String result){
-
+        groupListView=rootView.findViewById(R.id.GroupView);
+        if(UserGroupList!=null) {
+            adapter = new GroupListAdapter(context, UserGroupList, UserGroupListCount);
+            groupListView.setAdapter(adapter);
+        }else {
+            Toast.makeText(context, "GroupList Is Null", Toast.LENGTH_SHORT).show();
         }
+    }
 }

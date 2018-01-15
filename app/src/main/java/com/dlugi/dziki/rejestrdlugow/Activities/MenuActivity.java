@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.dlugi.dziki.rejestrdlugow.GroupListAdapter;
 import com.dlugi.dziki.rejestrdlugow.JSON.GetGroupsJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.InsertIntoGroupJSON;
+import com.dlugi.dziki.rejestrdlugow.JSON.JoinGroupDialogJSON;
 import com.dlugi.dziki.rejestrdlugow.R;
 
 import java.util.ArrayList;
@@ -86,9 +87,6 @@ public class MenuActivity extends AppCompatActivity {
     public static class GroupActivityFragment extends Fragment implements View.OnClickListener{
         private static final String ARG_SECTION_NUMBER = "section_number";
         private AlertDialog alert=null;
-        private ArrayList<ArrayList<String>> UserGroupList;
-        private ArrayList<String> UserGroupListCount;
-        private ListView groupListView ;
         private ArrayAdapter<String> adapter;
         public GroupActivityFragment() {
         }
@@ -111,43 +109,23 @@ public class MenuActivity extends AppCompatActivity {
             Button joinGroupButton = rootView.findViewById(R.id.joingroup);
             joinGroupButton.setOnClickListener(this);
 
-            //ListView w Groups tab
-            groupListView=rootView.findViewById(R.id.GroupView);
-            new GetGroupsJSON(getActivity(),UserGroupList,UserGroupListCount).execute(idFromCookie);
-            if(UserGroupList!=null) {//check if you are in any groups
-                adapter = new GroupListAdapter(getActivity(), UserGroupList, UserGroupListCount);
-                groupListView.setAdapter(adapter);
-            }else{
-                //TODO whole "else" for testing etc. in final build replace with "No groups" info
-                String testString = "testgroup";
-                String admintest = "0";
-                ArrayList<String> testListCount = new ArrayList<String>();
-                ArrayList<ArrayList<String>> testArray = new ArrayList<>();
-                for(int i=0;i<10;i++) {
-                    ArrayList<String> testList = new ArrayList<String>();
-                    testListCount.add(testString);
-                    testList.add(testString);
-                    testList.add(testString);
-                    testList.add(testString);
-                    testArray.add(testList);
-                }
-                adapter = new GroupListAdapter(getActivity(), testArray, testListCount);
-                groupListView.setAdapter(adapter);
-            }//TODO end of test "else", delete in final buld!
+            new GetGroupsJSON(getActivity(),rootView).execute(idFromCookie);
+
             return rootView;
         }
 
         //implementacja obsługi guzików z activity group
         @Override
         public void onClick(View v) {
-            EditText GroupnameLabel=null;
-            RadioGroup grouplist = null;
-            RadioGroup.LayoutParams rprms;
+            EditText GroupnameLabel;
             LayoutInflater inflater = getLayoutInflater();
             View joinGroupDialog=inflater.inflate(R.layout.joingroup_dialog, null);
             Button okbutton = joinGroupDialog.findViewById(R.id.okbutton);
             Button cancelbutton = joinGroupDialog.findViewById(R.id.cancelbutton);
             ImageButton searchbutton = joinGroupDialog.findViewById(R.id.searchbutton);
+            GroupnameLabel = joinGroupDialog.findViewById(R.id.groupnamesearch);
+            RadioGroup grouplist = joinGroupDialog.findViewById(R.id.GroupList);
+
             ArrayList<ArrayList<String>> groups=null;
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
             switch (v.getId()) {
@@ -161,7 +139,6 @@ public class MenuActivity extends AppCompatActivity {
                     cancelbutton.setOnClickListener(this);
                     okbutton.setOnClickListener(this);
                     searchbutton.setOnClickListener(this);
-                    grouplist = joinGroupDialog.findViewById(R.id.GroupList);
                     alert = alertBuilder.show();
                 }break;
                 case R.id.cancelbutton:{
@@ -176,28 +153,14 @@ public class MenuActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getActivity(), "Select a group first", Toast.LENGTH_SHORT).show();
                         }
-
-
                 }break;
                 case R.id.searchbutton:{
-                    GroupnameLabel = joinGroupDialog.findViewById(R.id.EnterGroupName);
-                    String GroupName = GroupnameLabel.getText().toString();
-                    //TODO when php file works, uncomment this section
-                    //new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName,idFromCookie);
-                    //TODO end of section
-                    if(groups==null || groups.isEmpty()){
-                        Toast.makeText(getActivity(),"No Groups Found",Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        for(ArrayList group: groups) {
-                            RadioButton radioButton = new RadioButton(getActivity());
-                            radioButton.setText(group.get(1).toString());
-                            rprms = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-                            grouplist.addView(radioButton, rprms);
-                        }
-                        grouplist.check(0);
-                        okbutton.setEnabled(true);
-                    }
+                    String GroupName;
+                    GroupName = GroupnameLabel.getText().toString();
+                    if(GroupnameLabel.getText().length()==0)
+                        Log.d("tag_namelabel","isempty");
+                    new JoinGroupDialogJSON(getActivity(),grouplist,groups).execute(GroupName,idFromCookie);
+
                 }break;
             }
         }
