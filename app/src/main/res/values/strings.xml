@@ -44,9 +44,10 @@
     </string>
 
     <!-- Strings related to Myacoount -->
-    <string name="set_login">HereWillBeLog</string>
+    <string name="set_login"></string>
     <string name="ch_log">Change Login</string>
     <string name="ch_pass">Change Password</string>
     <string name="del_button">Delete My Account</string>
+    <string name="accept_but">Accept Changes</string>
 
 </resources>
