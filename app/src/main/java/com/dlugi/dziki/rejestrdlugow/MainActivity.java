@@ -27,4 +27,11 @@ public class MainActivity extends Activity {
         }
         Log.d("Stan cookie", idFromCookie);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
 }

@@ -24,17 +24,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dlugi.dziki.rejestrdlugow.JSON.GetGroupsJSON;
 import com.dlugi.dziki.rejestrdlugow.JSON.InsertIntoGroupJSON;
-import com.dlugi.dziki.rejestrdlugow.JSON.JoinGroupDialogJSON;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static java.lang.Thread.sleep;
 
 public class MenuActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
@@ -117,7 +112,7 @@ public class MenuActivity extends AppCompatActivity {
             //ListView w Groups tab
             groupListView=rootView.findViewById(R.id.GroupView);
             new GetGroupsJSON(getActivity(),UserGroupList,UserGroupListCount).execute(idFromCookie);
-            if(UserGroupList!=null) {
+            if(UserGroupList!=null) {//check if you are in any groups
                 adapter = new GroupListAdapter(getActivity(), UserGroupList, UserGroupListCount);
                 groupListView.setAdapter(adapter);
             }else{
@@ -154,7 +149,7 @@ public class MenuActivity extends AppCompatActivity {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
             switch (v.getId()) {
                 case R.id.addgroup:{
-
+                    //TODO whole section
                 }
                 break;
                 case R.id.joingroup:{
@@ -184,7 +179,9 @@ public class MenuActivity extends AppCompatActivity {
                 case R.id.searchbutton:{
                     GroupnameLabel = joinGroupDialog.findViewById(R.id.EnterGroupName);
                     String GroupName = GroupnameLabel.getText().toString();
+                    //TODO when php file works, uncomment this section
                     //new JoinGroupDialogJSON(getActivity(),groups).execute(GroupName,idFromCookie);
+                    //TODO end of section
                     if(groups==null || groups.isEmpty()){
                         Toast.makeText(getActivity(),"No Groups Found",Toast.LENGTH_SHORT).show();
                     }
@@ -229,19 +226,12 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public static class UserActivityFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public UserActivityFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static UserActivityFragment newInstance(int sectionNumber) {
             UserActivityFragment fragment = new UserActivityFragment();
             Bundle args = new Bundle();
@@ -254,8 +244,7 @@ public class MenuActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.activity_user, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
             return rootView;
         }
     }
@@ -272,13 +261,13 @@ public class MenuActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-                    // Top Rated fragment activity
+                    // Debt fragment activity
                     return new DebtActivityFragment();
                 case 1:
-                    // Games fragment activity
+                    // Group fragment activity
                     return new GroupActivityFragment();
                 case 2:
-                    // Movies fragment activity
+                    // User fragment activity
                     return new UserActivityFragment();
             }
 
