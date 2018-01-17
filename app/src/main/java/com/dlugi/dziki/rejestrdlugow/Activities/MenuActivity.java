@@ -117,13 +117,11 @@ public class MenuActivity extends AppCompatActivity {
         //implementacja obsługi guzików z activity group
         @Override
         public void onClick(View v) {
-            EditText GroupnameLabel;
             LayoutInflater inflater = getLayoutInflater();
             View joinGroupDialog=inflater.inflate(R.layout.joingroup_dialog, null);
             Button okbutton = joinGroupDialog.findViewById(R.id.okbutton);
             Button cancelbutton = joinGroupDialog.findViewById(R.id.cancelbutton);
             ImageButton searchbutton = joinGroupDialog.findViewById(R.id.searchbutton);
-            GroupnameLabel = joinGroupDialog.findViewById(R.id.groupnamesearch);
             RadioGroup grouplist = joinGroupDialog.findViewById(R.id.GroupList);
 
             ArrayList<ArrayList<String>> groups=null;
@@ -155,10 +153,9 @@ public class MenuActivity extends AppCompatActivity {
                         }
                 }break;
                 case R.id.searchbutton:{
-                    String GroupName;
-                    GroupName = GroupnameLabel.getText().toString();
-                    if(GroupnameLabel.getText().length()==0)
-                        Log.d("tag_namelabel","isempty");
+                    EditText GroupnameLabel = joinGroupDialog.findViewById(R.id.groupnamesearch);
+                    String GroupName = GroupnameLabel.getText().toString();
+                    Log.d("tag_namelabel","empty"+GroupnameLabel.getText().toString());
                     new JoinGroupDialogJSON(getActivity(),grouplist,groups).execute(GroupName,idFromCookie);
 
                 }break;
