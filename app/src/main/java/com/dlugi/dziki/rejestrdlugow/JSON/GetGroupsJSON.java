@@ -54,7 +54,7 @@ public class GetGroupsJSON extends AsyncTask<String,Integer,String> {
             ParserJSON jParser = new ParserJSON(context);
             String link = "http://46.242.178.181/rejestr/getGroups.php";//TODO change to new php file
             params.add(new BasicNameValuePair("id", iduser));
-            JSONObject json = jParser.makeHttpRequest(link, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(link, "POST", params);
             groups = json.getJSONArray(TAG_GROUPS);
 
             for (int i = 0; i < groups.length(); i++) {

@@ -36,7 +36,7 @@ public class LoginCheckJSON extends AsyncTask<String,Integer,String>{
             ParserJSON jParser = new ParserJSON(context);
             String link = "http://46.242.178.181/rejestr/loginCheck.php";
             params.add(new BasicNameValuePair("id", id));
-            JSONObject json = jParser.makeHttpRequest(link, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(link, "POST", params);
             Log.d("logs", json.toString());
             if (json.has(TAG_PARAMS)){
                 Log.d("tag_params","logowanie udane");

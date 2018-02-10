@@ -37,7 +37,7 @@ public class RegisterJSON extends AsyncTask<String,Integer,String> {
             params.add(new BasicNameValuePair("login", username));
             params.add(new BasicNameValuePair("password", password));
             params.add(new BasicNameValuePair("email", email));
-            JSONObject json = jParser.makeHttpRequest(link, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(link, "POST", params);
             Log.d("logs", json.toString());
             if (json.has(TAG_PARAMS)){
                 Log.d("tag_params","logowanie udane");

@@ -51,7 +51,7 @@ public class JoinGroupDialogJSON extends AsyncTask<String,Integer,String> {
             String link = "http://46.242.178.181/rejestr/searchGroups.php";//TODO change to new php file
             params.add(new BasicNameValuePair("id", iduser));
             params.add(new BasicNameValuePair("name", groupname));
-            JSONObject json = jParser.makeHttpRequest(link, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(link, "POST", params);
             groupsarray = json.getJSONArray(TAG_GROUPS);
             for (int i = 0; i < groupsarray.length(); i++) {
                 ArrayList<String> groupparams = new ArrayList<>();
